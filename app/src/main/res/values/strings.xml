@@ -3,4 +3,7 @@
     <string name="get_started">GET STARTED</string>
     <string name="logo">logo</string>
     <string name="fity">FITY</string>
+    <string name="home">Home</string>
+    <string name="reports">Reports</string>
+    <string name="reminder">Reminder</string>
 </resources>
