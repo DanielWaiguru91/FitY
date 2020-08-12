@@ -1,5 +1,6 @@
 package tech.danielwaiguru.fity.ui.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.fragment_run_progress.*
 import tech.danielwaiguru.fity.R
+import tech.danielwaiguru.fity.service.RunningService
 
 class RunProgressFragment : Fragment() {
     private var map: GoogleMap? = null
@@ -24,6 +26,12 @@ class RunProgressFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             this.map = it
+        }
+    }
+    private fun sendIntent(action: String){
+        Intent(requireContext(), RunningService::class.java).let {
+            it.action = action
+            requireContext().startService(it)
         }
     }
     override fun onStart() {
