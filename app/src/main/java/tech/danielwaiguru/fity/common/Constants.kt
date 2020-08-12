@@ -11,4 +11,8 @@ object Constants {
     const val ACTION_START = "ACTION_START"
     const val ACTION_STOP = "ACTION_STOP"
     const val ACTION_PAUSE = "ACTION_PAUSE"
+    const val NOTIFICATION_ID = 1
+    const val NOTIFICATION_CHANNEL_ID = "channel_id"
+    const val NOTIFICATION_CHANNEL_NAME = "channel_name"
+    const val ACTION_RESUME_RUNNING_FRAGMENT = "RESUME"
 }
