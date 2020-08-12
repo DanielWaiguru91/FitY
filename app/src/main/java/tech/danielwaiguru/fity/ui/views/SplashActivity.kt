@@ -1,4 +1,4 @@
-package tech.danielwaiguru.fity.views
+package tech.danielwaiguru.fity.ui.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
