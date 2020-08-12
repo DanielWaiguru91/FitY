@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import tech.danielwaiguru.fity.R
@@ -15,10 +16,6 @@ import tech.danielwaiguru.fity.common.Constants.RUNTIME_PERMISSIONS
 import tech.danielwaiguru.fity.utils.LocationUtils
 
 class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestPermissions()
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +26,8 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //requestPermissions()
+        requestPermissions()
+        initRunningProgressFragment()
     }
     //check permissions status and request again if not already granted
     private fun requestPermissions(){
@@ -72,5 +70,11 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+    private fun initRunningProgressFragment(){
+        view?.let {
+            val action = HomeFragmentDirections.actionHomeFragmentToRunProgressFragment()
+            it.findNavController().navigate(action)
+        }
     }
 }

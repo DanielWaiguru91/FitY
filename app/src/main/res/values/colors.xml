@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#05004E</color>
+    <color name="colorPrimaryDark">#FB8585</color>
+    <color name="colorAccent">#D5436A</color>
     <color name="orange">#ff9124</color>
     <color name="textColor">#f8ce22</color>
     <color name="barColor">#FF7F00</color>
     <color name="mapColor">#592519</color>
     <color name="white">#FFF</color>
+    <!--6200EE #3700B3 #03DAC5-->
 </resources>

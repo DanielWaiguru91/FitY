@@ -9,7 +9,13 @@
         android:id="@+id/homeFragment"
         android:name="tech.danielwaiguru.fity.ui.views.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_runProgressFragment"
+            app:destination="@id/runProgressFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/reportFragment"
         android:name="tech.danielwaiguru.fity.ui.views.ReportFragment"
@@ -25,4 +31,9 @@
         android:name="tech.danielwaiguru.fity.ui.views.ReminderFragment"
         android:label="fragment_reminder"
         tools:layout="@layout/fragment_reminder" />
+    <fragment
+        android:id="@+id/runProgressFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.RunProgressFragment"
+        android:label="fragment_run_progress"
+        tools:layout="@layout/fragment_run_progress" />
 </navigation>
