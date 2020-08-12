@@ -16,15 +16,24 @@ import tech.danielwaiguru.fity.common.Constants.ACTION_START
 import tech.danielwaiguru.fity.common.Constants.ACTION_STOP
 import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_CHANNEL_ID
 import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_CHANNEL_NAME
+import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_ID
 import tech.danielwaiguru.fity.ui.views.MainActivity
 import timber.log.Timber
 
 class RunningService: LifecycleService(){
+    private var isStarting = true
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
             when (it.action){
                 ACTION_START -> {
-                    Timber.d("Service started")
+                    if (isStarting){
+                        createNotification()
+                        isStarting = false
+                        Timber.d("Service started")
+                    }
+                    else{
+                        Timber.d("Service resumed")
+                    }
                 }
                 ACTION_PAUSE -> {
                     Timber.d("Service paused")
@@ -46,6 +55,8 @@ class RunningService: LifecycleService(){
             .setContentText(getString(R.string.timer))
             .setAutoCancel(false)
             .setOngoing(true)
+            .setContentIntent(pendingIntent())
+        startForeground(NOTIFICATION_ID, builder.build())
     }
     private fun pendingIntent() = PendingIntent.getActivity(
         this,
