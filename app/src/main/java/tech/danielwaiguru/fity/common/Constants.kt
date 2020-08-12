@@ -15,4 +15,6 @@ object Constants {
     const val NOTIFICATION_CHANNEL_ID = "channel_id"
     const val NOTIFICATION_CHANNEL_NAME = "channel_name"
     const val ACTION_RESUME_RUNNING_FRAGMENT = "RESUME"
+    const val UPDATE_INTERVAL = 5000L
+    const val FAST_UPDATE = 2000L
 }
