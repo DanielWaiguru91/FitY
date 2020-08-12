@@ -1,10 +1,11 @@
-package tech.danielwaiguru.fity
+package tech.danielwaiguru.fity.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import kotlinx.android.synthetic.main.activity_splash.*
+import tech.danielwaiguru.fity.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

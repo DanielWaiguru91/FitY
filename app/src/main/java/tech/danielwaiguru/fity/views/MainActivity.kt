@@ -1,7 +1,8 @@
-package tech.danielwaiguru.fity
+package tech.danielwaiguru.fity.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import tech.danielwaiguru.fity.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
