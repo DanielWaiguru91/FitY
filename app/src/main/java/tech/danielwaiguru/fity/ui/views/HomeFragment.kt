@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import kotlinx.android.synthetic.main.fragment_home.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import tech.danielwaiguru.fity.R
@@ -27,7 +28,10 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
-        initRunningProgressFragment()
+        initListeners()
+    }
+    private fun initListeners(){
+        fab.setOnClickListener { initRunningProgressFragment() }
     }
     //check permissions status and request again if not already granted
     private fun requestPermissions(){
