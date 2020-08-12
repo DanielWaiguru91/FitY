@@ -1,5 +1,6 @@
 package tech.danielwaiguru.fity.service
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,9 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Build
+import android.os.Looper
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -36,6 +40,7 @@ class RunningService: LifecycleService(){
         val isRunning = MutableLiveData<Boolean>()
         val routeCoords = MutableLiveData<routes>()
     }
+    lateinit var fusedLocationClient: FusedLocationProviderClient
     private var isStarting = true
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
@@ -60,7 +65,17 @@ class RunningService: LifecycleService(){
         }
         return super.onStartCommand(intent, flags, startId)
     }
+
+    override fun onCreate() {
+        super.onCreate()
+        initializeRoutes()
+        fusedLocationClient = FusedLocationProviderClient(this)
+        isRunning.observe(this, Observer {
+            updateUserLocation(it)
+        })
+    }
     //update user location record
+    @SuppressLint("MissingPermission")
     private fun updateUserLocation(isUserRunning: Boolean) {
         if (isUserRunning){
             if (LocationUtils.hasPermissions(this)){
@@ -69,16 +84,25 @@ class RunningService: LifecycleService(){
                     fastestInterval = FAST_UPDATE
                     priority = PRIORITY_HIGH_ACCURACY
                 }
+                fusedLocationClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    Looper.getMainLooper()
+                )
             }
         }
+        else {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
     }
-    val locationCallback = object : LocationCallback() {
+    private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
             super.onLocationResult(locationResult)
             if (isRunning.value!!){
                 locationResult?.locations?.let { locations ->
                     for (location in locations){
                         addRoutePoint(location)
+                        Timber.d("location ${location.latitude}, ${location.longitude}")
                     }
                 }
             }
@@ -105,6 +129,7 @@ class RunningService: LifecycleService(){
     } ?: routeCoords.postValue(mutableListOf(mutableListOf()))
     private fun createNotification(){
         addEmptyRoute()
+        isRunning.postValue(true)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel(notificationManager)
