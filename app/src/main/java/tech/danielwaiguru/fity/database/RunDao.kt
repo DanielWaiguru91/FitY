@@ -5,6 +5,9 @@ import androidx.room.*
 
 @Dao
 interface RunDao {
+    /**
+     * function to access runs database
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveRun(run: Run)
 
@@ -24,7 +27,7 @@ interface RunDao {
     fun getRunsByDistance(): LiveData<List<Run>>
 
     @Query("SELECT * FROM runs_table ORDER BY timeTaken DESC")
-    fun getRunsByTimes(): LiveData<List<Run>>
+    fun getRunsByTime(): LiveData<List<Run>>
 
     @Query("SELECT * FROM runs_table ORDER BY averageSpeed DESC")
     fun getRunsBySpeed(): LiveData<List<Run>>
