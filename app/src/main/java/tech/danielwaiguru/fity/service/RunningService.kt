@@ -27,7 +27,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tech.danielwaiguru.fity.R
 import tech.danielwaiguru.fity.common.Constants.ACTION_PAUSE
-import tech.danielwaiguru.fity.common.Constants.ACTION_RESUME_RUNNING_FRAGMENT
 import tech.danielwaiguru.fity.common.Constants.ACTION_START
 import tech.danielwaiguru.fity.common.Constants.ACTION_STOP
 import tech.danielwaiguru.fity.common.Constants.FAST_UPDATE
@@ -35,8 +34,8 @@ import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_CHANNEL_ID
 import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_CHANNEL_NAME
 import tech.danielwaiguru.fity.common.Constants.NOTIFICATION_ID
 import tech.danielwaiguru.fity.common.Constants.UPDATE_INTERVAL
-import tech.danielwaiguru.fity.ui.views.MainActivity
 import tech.danielwaiguru.fity.utils.LocationUtils
+import tech.danielwaiguru.fity.utils.TimeUtils
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,6 +45,9 @@ typealias routes = MutableList<route>
 class RunningService: LifecycleService(){
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
+    @Inject
+    lateinit var baseNotificationBuilder : NotificationCompat.Builder
+
     private var isStarting = true
     private val runningTime = MutableLiveData<Long>()
     private var isTimerEnabled = false
@@ -53,7 +55,7 @@ class RunningService: LifecycleService(){
     private var timeRan = 0L
     private var timeStarted = 0L
     private var lastSecondTimestamp = 0L
-
+    lateinit var currentNotification: NotificationCompat.Builder
     companion object {
         val isRunning = MutableLiveData<Boolean>()
         val routeCoords = MutableLiveData<routes>()
@@ -88,8 +90,10 @@ class RunningService: LifecycleService(){
     override fun onCreate() {
         super.onCreate()
         initializeRoutes()
+        currentNotification = baseNotificationBuilder
         isRunning.observe(this, Observer {
             updateUserLocation(it)
+            updateNotification(it)
         })
     }
     private fun pauseService(){
@@ -175,23 +179,39 @@ class RunningService: LifecycleService(){
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel(notificationManager)
-        val builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_run)
-            .setContentTitle(getString(R.string.notification_title))
-            .setContentText(getString(R.string.timer))
-            .setAutoCancel(false)
-            .setOngoing(true)
-            .setContentIntent(pendingIntent())
-        startForeground(NOTIFICATION_ID, builder.build())
+        startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
+        runningTime.observe(this, Observer {
+            val notification = currentNotification
+                .setContentText(TimeUtils.formatTime(it * 1000L))
+            notificationManager.notify(NOTIFICATION_ID, notification.build())
+        })
     }
-    private fun pendingIntent() = PendingIntent.getActivity(
-        this,
-        0,
-        Intent(this, MainActivity::class.java).also {
-            it.action = ACTION_RESUME_RUNNING_FRAGMENT
-        },
-        FLAG_UPDATE_CURRENT
-    )
+    //update notification as timer runs
+    private fun updateNotification(isUserRunning: Boolean){
+        val notificationText = if (isUserRunning) "Pause" else "Resume"
+        val pendingIntent = if (isUserRunning){
+            val pauseIntent = Intent(this, RunningService::class.java).apply {
+                action = ACTION_PAUSE
+            }
+            PendingIntent.getService(this, 1, pauseIntent, FLAG_UPDATE_CURRENT)
+        }
+        else {
+            val resumeIntent = Intent(this, RunningService::class.java).apply {
+                action = ACTION_START
+            }
+            PendingIntent.getService(this, 1, resumeIntent, FLAG_UPDATE_CURRENT)
+        }
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        //remove action
+        currentNotification.javaClass.getDeclaredField("mAction").apply {
+            isAccessible = true
+            set(currentNotification, ArrayList<NotificationCompat.Action>())
+        }
+        currentNotification = baseNotificationBuilder
+            .addAction(R.drawable.ic_baseline_run, notificationText, pendingIntent)
+        notificationManager.notify(NOTIFICATION_ID, currentNotification.build())
+    }
     private fun createNotificationChannel(notificationManager: NotificationManager){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val channel = NotificationChannel(
