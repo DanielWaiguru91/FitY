@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,9 +38,13 @@ import tech.danielwaiguru.fity.common.Constants.UPDATE_INTERVAL
 import tech.danielwaiguru.fity.ui.views.MainActivity
 import tech.danielwaiguru.fity.utils.LocationUtils
 import timber.log.Timber
+import javax.inject.Inject
+
 typealias route = MutableList<LatLng>
 typealias routes = MutableList<route>
+@AndroidEntryPoint
 class RunningService: LifecycleService(){
+    @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
     private var isStarting = true
     private val runningTime = MutableLiveData<Long>()
@@ -83,7 +88,6 @@ class RunningService: LifecycleService(){
     override fun onCreate() {
         super.onCreate()
         initializeRoutes()
-        fusedLocationClient = FusedLocationProviderClient(this)
         isRunning.observe(this, Observer {
             updateUserLocation(it)
         })
