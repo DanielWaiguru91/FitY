@@ -20,6 +20,10 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import tech.danielwaiguru.fity.R
 import tech.danielwaiguru.fity.common.Constants.ACTION_PAUSE
 import tech.danielwaiguru.fity.common.Constants.ACTION_RESUME_RUNNING_FRAGMENT
@@ -36,12 +40,20 @@ import timber.log.Timber
 typealias route = MutableList<LatLng>
 typealias routes = MutableList<route>
 class RunningService: LifecycleService(){
+    lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var isStarting = true
+    private val runningTime = MutableLiveData<Long>()
+    private var isTimerEnabled = false
+    private var lapTime = 0L
+    private var timeRan = 0L
+    private var timeStarted = 0L
+    private var lastSecondTimestamp = 0L
+
     companion object {
         val isRunning = MutableLiveData<Boolean>()
         val routeCoords = MutableLiveData<routes>()
+        val timeRanInMillis = MutableLiveData<Long>()
     }
-    lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var isStarting = true
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
             when (it.action){
@@ -52,10 +64,12 @@ class RunningService: LifecycleService(){
                         Timber.d("Service started")
                     }
                     else{
+                        startTimer()
                         Timber.d("Service resumed")
                     }
                 }
                 ACTION_PAUSE -> {
+                    pauseService()
                     Timber.d("Service paused")
                 }
                 ACTION_STOP -> {
@@ -73,6 +87,28 @@ class RunningService: LifecycleService(){
         isRunning.observe(this, Observer {
             updateUserLocation(it)
         })
+    }
+    private fun pauseService(){
+        isRunning.postValue(false)
+        isTimerEnabled = false
+    }
+    private fun startTimer(){
+        addEmptyRoute()
+        isRunning.postValue(true)
+        timeStarted = System.currentTimeMillis()
+        isTimerEnabled = true
+        CoroutineScope(Dispatchers.Main).launch {
+            while (isRunning.value!!){
+                lapTime = System.currentTimeMillis() - timeStarted
+                timeRanInMillis.postValue(timeRan + lapTime)
+                if (timeRanInMillis.value!! >= lastSecondTimestamp + 1000L){
+                    runningTime.postValue(runningTime.value?.plus(1))
+                    lastSecondTimestamp += 100L
+                }
+                delay(50L)
+            }
+            timeRan += lapTime
+        }
     }
     //update user location record
     @SuppressLint("MissingPermission")
@@ -128,7 +164,7 @@ class RunningService: LifecycleService(){
         routeCoords.postValue(this)
     } ?: routeCoords.postValue(mutableListOf(mutableListOf()))
     private fun createNotification(){
-        addEmptyRoute()
+        startTimer()
         isRunning.postValue(true)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
