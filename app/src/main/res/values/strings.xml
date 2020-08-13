@@ -12,4 +12,7 @@
     <string name="rationale">FitY requires your location permission to record your runs routes</string>
     <string name="notification_title">Fity-Fitness App</string>
     <string name="timer">00:00:00</string>
+    <string name="finish">Finish</string>
+    <string name="start_run">Start</string>
+    <string name="stop_run">Stop</string>
 </resources>
