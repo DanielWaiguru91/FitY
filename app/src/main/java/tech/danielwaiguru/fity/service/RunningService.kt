@@ -148,6 +148,8 @@ class RunningService: LifecycleService(){
     private fun initializeRoutes(){
         isRunning.postValue(false)
         routeCoords.postValue(mutableListOf())
+        runningTime.postValue(0L)
+        timeRanInMillis.postValue(0L)
     }
     //save progress
     private fun addRoutePoint(location: Location?){

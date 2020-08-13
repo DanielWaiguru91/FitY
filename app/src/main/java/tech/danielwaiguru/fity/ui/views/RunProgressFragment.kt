@@ -19,11 +19,13 @@ import tech.danielwaiguru.fity.common.gone
 import tech.danielwaiguru.fity.common.visible
 import tech.danielwaiguru.fity.service.RunningService
 import tech.danielwaiguru.fity.service.route
+import tech.danielwaiguru.fity.utils.TimeUtils
 
 class RunProgressFragment : Fragment() {
     private var map: GoogleMap? = null
     private var isUserRunning = false
     private var userRoute = mutableListOf<route>()
+    private var currentTimeInMillis = 0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -101,6 +103,11 @@ class RunProgressFragment : Fragment() {
             userRoute = it
             drawUserRoute()
             moveCameraToUserFinishLocation()
+        })
+        RunningService.timeRanInMillis.observe(viewLifecycleOwner, Observer {
+            currentTimeInMillis = it
+            val formattedTime = TimeUtils.formatTime(currentTimeInMillis, true)
+            timer.text = formattedTime
         })
     }
     private fun sendIntent(action: String){
