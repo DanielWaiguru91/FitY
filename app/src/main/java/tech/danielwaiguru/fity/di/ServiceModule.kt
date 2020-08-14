@@ -27,7 +27,7 @@ object ServiceModule {
     fun provideBaseNotificationBuilder(
         @ApplicationContext context: Context,
         pendingIntent: PendingIntent
-    ) =  NotificationCompat.Builder(context, Constants.NOTIFICATION_CHANNEL_ID)
+    ): NotificationCompat.Builder =  NotificationCompat.Builder(context, Constants.NOTIFICATION_CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_baseline_run)
         .setContentTitle(context.getString(R.string.notification_title))
         .setContentText(context.getString(R.string.timer))
@@ -38,7 +38,7 @@ object ServiceModule {
     @Provides
     fun providePendingIntent(
         @ApplicationContext context: Context
-    ) = PendingIntent.getActivity(
+    ): PendingIntent = PendingIntent.getActivity(
         context,
         0,
         Intent(context, MainActivity::class.java).also {

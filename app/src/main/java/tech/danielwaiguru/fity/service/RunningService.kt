@@ -55,7 +55,7 @@ class RunningService: LifecycleService(){
     private var timeRan = 0L
     private var timeStarted = 0L
     private var lastSecondTimestamp = 0L
-    lateinit var currentNotification: NotificationCompat.Builder
+    private lateinit var currentNotification: NotificationCompat.Builder
     companion object {
         val isRunning = MutableLiveData<Boolean>()
         val routeCoords = MutableLiveData<routes>()
@@ -199,15 +199,16 @@ class RunningService: LifecycleService(){
             val resumeIntent = Intent(this, RunningService::class.java).apply {
                 action = ACTION_START
             }
-            PendingIntent.getService(this, 1, resumeIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 2, resumeIntent, FLAG_UPDATE_CURRENT)
         }
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         //remove action
-        currentNotification.javaClass.getDeclaredField("mAction").apply {
+        currentNotification.javaClass.getDeclaredField("mActions").apply {
             isAccessible = true
             set(currentNotification, ArrayList<NotificationCompat.Action>())
         }
+        //replace with a new action
         currentNotification = baseNotificationBuilder
             .addAction(R.drawable.ic_baseline_run, notificationText, pendingIntent)
         notificationManager.notify(NOTIFICATION_ID, currentNotification.build())
