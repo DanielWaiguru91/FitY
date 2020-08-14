@@ -7,28 +7,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run_progress.*
 import tech.danielwaiguru.fity.R
+import tech.danielwaiguru.fity.common.Constants
 import tech.danielwaiguru.fity.common.Constants.ACTION_PAUSE
 import tech.danielwaiguru.fity.common.Constants.ACTION_START
 import tech.danielwaiguru.fity.common.gone
 import tech.danielwaiguru.fity.common.visible
+import tech.danielwaiguru.fity.database.Run
 import tech.danielwaiguru.fity.service.RunningService
 import tech.danielwaiguru.fity.service.route
+import tech.danielwaiguru.fity.ui.viewmodels.RunViewModel
 import tech.danielwaiguru.fity.utils.MathUtils
 import tech.danielwaiguru.fity.utils.TimeUtils
 import java.util.*
 
+@AndroidEntryPoint
 class RunProgressFragment : Fragment() {
+    private val runViewModel: RunViewModel by viewModels()
     private var map: GoogleMap? = null
     private var isUserRunning = false
     private var userRoute = mutableListOf<route>()
     private var currentTimeInMillis = 0L
+    private var weight = 80f
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +58,10 @@ class RunProgressFragment : Fragment() {
     }
     private fun initListeners(){
         buttonAction.setOnClickListener { flipRunningStates() }
+        finish.setOnClickListener {
+            visualizeUserRoute()
+            saveRun()
+        }
     }
     private fun drawUserRoute(){
         if (userRoute.isNotEmpty() && userRoute.last().size > 1){
@@ -120,6 +133,20 @@ class RunProgressFragment : Fragment() {
             }
             val averageSpeed = MathUtils.calculateAverageSpeed(distance, currentTimeInMillis)
             val runDate = Calendar.getInstance().timeInMillis
+            val caloriesBurned = MathUtils.caloriesBurned(distance, weight)
+            val run = Run(runDate = runDate,
+                averageSpeed = averageSpeed,
+                distance = distance,
+                timeTaken = currentTimeInMillis,
+                image = bitmap,caloriesBurned = caloriesBurned)
+            runViewModel.saveRun(run)
+            stopRunService()
+        }
+    }
+    private fun stopRunService(){
+        view?.let {
+            sendIntent(Constants.ACTION_STOP)
+            it.findNavController().navigate(R.id.action_runProgressFragment_to_homeFragment)
         }
     }
     //subscribe to running service
