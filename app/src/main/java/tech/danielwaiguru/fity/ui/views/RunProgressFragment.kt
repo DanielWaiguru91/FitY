@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_run_progress.*
 import tech.danielwaiguru.fity.R
@@ -19,7 +20,9 @@ import tech.danielwaiguru.fity.common.gone
 import tech.danielwaiguru.fity.common.visible
 import tech.danielwaiguru.fity.service.RunningService
 import tech.danielwaiguru.fity.service.route
+import tech.danielwaiguru.fity.utils.MathUtils
 import tech.danielwaiguru.fity.utils.TimeUtils
+import java.util.*
 
 class RunProgressFragment : Fragment() {
     private var map: GoogleMap? = null
@@ -87,6 +90,7 @@ class RunProgressFragment : Fragment() {
             finish.gone()
         }
     }
+    //start and pause running service accordingly
     private fun flipRunningStates(){
         if (isUserRunning){
             sendIntent(ACTION_PAUSE)
@@ -95,6 +99,30 @@ class RunProgressFragment : Fragment() {
             sendIntent(ACTION_START)
         }
     }
+    //zoom user running route as possible for a clear screenshot
+    private fun visualizeUserRoute(){
+        val padding = mapView.height * 0.08f
+        val bounds = LatLngBounds.builder()
+        for (route in userRoute){
+            for (position in route){
+                bounds.include(position)
+            }
+        }
+        map?.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(bounds.build(), mapView.width, mapView.height, padding.toInt())
+        )
+    }
+    private fun saveRun(){
+        map?.snapshot { bitmap ->
+            var distance = 0f
+            for (route in userRoute){
+                distance += MathUtils.calculateTotalDistance(route)
+            }
+            val averageSpeed = MathUtils.calculateAverageSpeed(distance, currentTimeInMillis)
+            val runDate = Calendar.getInstance().timeInMillis
+        }
+    }
+    //subscribe to running service
     private fun subscriber(){
         RunningService.isRunning.observe(viewLifecycleOwner, Observer {
             updateUi(it)
