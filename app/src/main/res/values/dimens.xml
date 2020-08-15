@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_bottom">10dp</dimen>
-    <dimen name="margin">16dp</dimen>
+    <dimen name="margin_big">16dp</dimen>
     <dimen name="timer_size">40sp</dimen>
     <dimen name="margin_bottom_large">200dp</dimen>
+    <dimen name="card_radius">10dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
+    <dimen name="image_size">40dp</dimen>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin">8dp</dimen>
 </resources>

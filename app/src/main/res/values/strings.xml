@@ -15,4 +15,9 @@
     <string name="start_run">Start</string>
     <string name="stop_run">Stop</string>
     <string name="test">hhh</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
+    <string name="speed">Speed</string>
+    <string name="duration">Duration</string>
+    <string name="runners_route">Runners route</string>
 </resources>
