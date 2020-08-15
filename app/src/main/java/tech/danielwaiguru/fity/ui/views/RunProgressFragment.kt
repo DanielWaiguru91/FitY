@@ -146,7 +146,7 @@ class RunProgressFragment : Fragment() {
     private fun stopRunService(){
         view?.let {
             sendIntent(Constants.ACTION_STOP)
-            it.findNavController().navigate(R.id.action_runProgressFragment_to_homeFragment)
+            it.findNavController().navigate(R.id.action_runProgressFragment_to_homeFragment2)
         }
     }
     //subscribe to running service

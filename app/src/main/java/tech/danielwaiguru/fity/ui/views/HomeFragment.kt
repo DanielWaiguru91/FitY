@@ -143,7 +143,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
     private fun initRunningProgressFragment(){
         view?.let {
-            val action = HomeFragmentDirections.actionHomeFragmentToRunProgressFragment()
+            val action = HomeFragmentDirections.actionHomeFragment2ToRunProgressFragment()
             it.findNavController().navigate(action)
         }
     }

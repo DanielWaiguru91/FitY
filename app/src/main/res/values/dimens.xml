@@ -11,4 +11,6 @@
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin">8dp</dimen>
     <dimen name="spinner_width">100dp</dimen>
+    <dimen name="view_height">200dp</dimen>
+    <dimen name="margin_bottom_medium">15dp</dimen>
 </resources>

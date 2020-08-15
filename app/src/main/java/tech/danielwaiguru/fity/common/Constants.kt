@@ -17,4 +17,8 @@ object Constants {
     const val ACTION_RESUME_RUNNING_FRAGMENT = "RESUME"
     const val UPDATE_INTERVAL = 5000L
     const val FAST_UPDATE = 2000L
+    const val PREFS_NAME = "USER"
+    const val NAME_KEY = "USERNAME"
+    const val WEIGHT_KEY = "WEIGHT"
+    const val IS_USER_LOGGED_IN = "LOGGED_IN"
 }
