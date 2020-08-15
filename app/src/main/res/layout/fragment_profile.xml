@@ -1,64 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ui.views.ProfileFragment">
-    <TextView
-        android:id="@+id/greet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_big"
-        android:fontFamily="@font/bungee"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Hello Danny" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:layout_margin="@dimen/margin"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greet" />
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/your_profile"
+       android:textStyle="bold"
+       android:layout_marginBottom="@dimen/margin_big"
+       android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+       android:layout_gravity="center_horizontal"/>
     <EditText
         android:id="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
         android:hint="@string/name"
-        android:layout_margin="@dimen/margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        android:autofillHints="@string/name"
-        android:inputType="textCapWords" />
-    <TextView
-        android:id="@+id/weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/weight"
-        android:layout_margin="@dimen/margin"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@id/userName"
-        app:layout_constraintTop_toBottomOf="@id/userName"
-        />
-
+        android:inputType="text"
+        tools:ignore="Autofill" />
     <EditText
         android:id="@+id/userWeight"
-        android:layout_margin="@dimen/margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/weight"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:autofillHints="@string/weight"
+        android:layout_marginBottom="@dimen/margin_big"
         android:hint="@string/weight"
-        android:inputType="number|numberDecimal" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:inputType="number|numberDecimal"
+        tools:ignore="Autofill" />
+    <Button
+        android:id="@+id/saveProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_big"
+        android:background="@color/colorAccent"
+        android:text="@string/edit_your_details"
+        android:textColor="@color/white" />
+</LinearLayout>

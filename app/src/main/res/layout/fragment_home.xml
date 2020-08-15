@@ -21,7 +21,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Hello Danny"
-                android:text="Hello"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 />
@@ -33,7 +32,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sort"
         android:textStyle="bold"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="@id/filterSpinner"
         app:layout_constraintBottom_toBottomOf="@id/filterSpinner"
         app:layout_constraintEnd_toStartOf="@id/filterSpinner"

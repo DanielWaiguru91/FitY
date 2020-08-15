@@ -25,7 +25,7 @@
     <string name="user_profile">User Profile</string>
     <string name="name">Name:</string>
     <string name="weight">Weight</string>
-    <string name="edit_your_details">Edit Your Details</string>
+    <string name="edit_your_details">Save</string>
     <string-array name="filter_options">
         <item>Date</item>
         <item>Distance</item>

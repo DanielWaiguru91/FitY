@@ -21,6 +21,7 @@ import tech.danielwaiguru.fity.R
 import tech.danielwaiguru.fity.adapters.RunAdapter
 import tech.danielwaiguru.fity.common.Constants.REQUEST_PERMISSIONS_CODE
 import tech.danielwaiguru.fity.common.Constants.RUNTIME_PERMISSIONS
+import tech.danielwaiguru.fity.common.toast
 import tech.danielwaiguru.fity.ui.viewmodels.RunViewModel
 import tech.danielwaiguru.fity.utils.LocationUtils
 import tech.danielwaiguru.fity.utils.SortCriteria
@@ -29,23 +30,30 @@ import tech.danielwaiguru.fity.utils.SortCriteria
 class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
     private val runViewModel: RunViewModel by viewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-        setHasOptionsMenu(true)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         toolbar.inflateMenu(R.menu.home_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId){
+                R.id.profile -> {
+                    initProfileFragment()
+                    activity?.toast("profile")
+                    true
+                }
+                else -> super.onOptionsItemSelected(it)
+            }
+        }
         requestPermissions()
         setupRecyclerView()
         sortSelection()
@@ -75,6 +83,10 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
     private fun initListeners(){
         fab.setOnClickListener { initRunningProgressFragment() }
+    }
+    private fun initProfileFragment(){
+        val dialog = ProfileFragment()
+        dialog.show(childFragmentManager, dialog.tag)
     }
     private fun setupRecyclerView() = runsRecyclerView.apply {
         adapter = runAdapter
