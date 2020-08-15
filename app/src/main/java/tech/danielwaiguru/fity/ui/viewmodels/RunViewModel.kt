@@ -28,7 +28,7 @@ class RunViewModel @ViewModelInject constructor(
     private fun runsByCalories() = runRepository.getRunsByCalories()
 
     val runs = MediatorLiveData<List<Run>>()
-    private var criteria = SortCriteria.DATE
+    var criteria = SortCriteria.DATE
     fun getSortedRuns(){
         runs.addSource(runsByDate()){result ->
             if (criteria == SortCriteria.DATE){

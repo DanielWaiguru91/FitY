@@ -18,6 +18,7 @@
         android:id="@+id/filterSpinner"
         android:layout_width="@dimen/spinner_width"
         android:layout_height="wrap_content"
+        android:entries="@array/filter_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin"

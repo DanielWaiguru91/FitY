@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,6 +22,8 @@ import tech.danielwaiguru.fity.common.Constants.REQUEST_PERMISSIONS_CODE
 import tech.danielwaiguru.fity.common.Constants.RUNTIME_PERMISSIONS
 import tech.danielwaiguru.fity.ui.viewmodels.RunViewModel
 import tech.danielwaiguru.fity.utils.LocationUtils
+import tech.danielwaiguru.fity.utils.SortCriteria
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
@@ -37,6 +40,26 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
         setupRecyclerView()
+        sortSelection()
+        filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position){
+                    0 -> runViewModel.sortRuns(SortCriteria.DATE)
+                    1 -> runViewModel.sortRuns(SortCriteria.DISTANCE)
+                    2 -> runViewModel.sortRuns(SortCriteria.TIME)
+                    3 -> runViewModel.sortRuns(SortCriteria.SPEED)
+                    4 -> runViewModel.sortRuns(SortCriteria.CALORIES)
+                }
+            }
+        }
         runViewModel.runs.observe(viewLifecycleOwner, Observer {
             runAdapter.setRun(it)
         })
@@ -49,7 +72,13 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         adapter = runAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }
-    private fun sortSelection() = when (runViewModel.c)
+    private fun sortSelection() = when (runViewModel.criteria){
+        SortCriteria.DATE -> filterSpinner.setSelection(0)
+        SortCriteria.DISTANCE -> filterSpinner.setSelection(1)
+        SortCriteria.TIME -> filterSpinner.setSelection(2)
+        SortCriteria.SPEED -> filterSpinner.setSelection(3)
+        SortCriteria.CALORIES -> filterSpinner.setSelection(4)
+    }
     //check permissions status and request again if not already granted
     private fun requestPermissions(){
         if (LocationUtils.hasPermissions(requireContext())){
