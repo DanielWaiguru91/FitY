@@ -15,7 +15,7 @@
        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
        android:layout_gravity="center_horizontal"/>
     <EditText
-        android:id="@+id/userName"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_big"
@@ -23,7 +23,7 @@
         android:inputType="text"
         tools:ignore="Autofill" />
     <EditText
-        android:id="@+id/userWeight"
+        android:id="@+id/etWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_big"
@@ -31,7 +31,7 @@
         android:inputType="number|numberDecimal"
         tools:ignore="Autofill" />
     <Button
-        android:id="@+id/saveProfile"
+        android:id="@+id/saveDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
