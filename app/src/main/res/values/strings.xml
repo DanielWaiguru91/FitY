@@ -21,6 +21,11 @@
     <string name="duration">Duration</string>
     <string name="runners_route">Runners route</string>
     <string name="sort">Sort By:</string>
+    <string name="your_profile">Profile</string>
+    <string name="user_profile">User Profile</string>
+    <string name="name">Name:</string>
+    <string name="weight">Weight</string>
+    <string name="edit_your_details">Edit Your Details</string>
     <string-array name="filter_options">
         <item>Date</item>
         <item>Distance</item>

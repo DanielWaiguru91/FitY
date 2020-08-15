@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.homeFragment, R.id.reportFragment, R.id.reminderFragment ->{
+                    R.id.homeFragment, R.id.reportFragment, R.id.reminderFragment, R.id.profileFragment ->{
                         bottomNav.visible()
                     }
                     else -> bottomNav.gone()

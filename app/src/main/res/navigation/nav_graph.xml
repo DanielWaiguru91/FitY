@@ -24,11 +24,6 @@
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="tech.danielwaiguru.fity.ui.views.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
         android:id="@+id/reminderFragment"
         android:name="tech.danielwaiguru.fity.ui.views.ReminderFragment"
         android:label="fragment_reminder"
@@ -42,4 +37,9 @@
             android:id="@+id/action_runProgressFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
