@@ -10,4 +10,5 @@
     <dimen name="padding">10dp</dimen>
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin">8dp</dimen>
+    <dimen name="spinner_width">100dp</dimen>
 </resources>

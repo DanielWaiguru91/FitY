@@ -20,4 +20,12 @@
     <string name="speed">Speed</string>
     <string name="duration">Duration</string>
     <string name="runners_route">Runners route</string>
+    <string name="sort">Sort By:</string>
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Distance</item>
+        <item>Time</item>
+        <item>Speed</item>
+        <item>Calories</item>
+    </string-array>
 </resources>

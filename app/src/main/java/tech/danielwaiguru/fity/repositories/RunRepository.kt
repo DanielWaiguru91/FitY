@@ -17,6 +17,7 @@ class RunRepository @Inject constructor(private val runDao: RunDao) {
     fun getRunsByTime() = runDao.getRunsByTime()
     fun getRunsBySpeed() = runDao.getRunsBySpeed()
     fun getRunsByCalories() = runDao.getRunsByCalories()
+    fun getRunsByDate() = runDao.getRunsByDate()
     suspend fun deleteRun(run: Run) = runDao.deleteRun(run)
     suspend fun deleteAllRuns() = runDao.deleteAllRuns()
 }

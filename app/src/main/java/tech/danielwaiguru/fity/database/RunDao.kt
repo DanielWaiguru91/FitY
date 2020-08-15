@@ -34,6 +34,8 @@ interface RunDao {
 
     @Query("SELECT * FROM runs_table ORDER BY caloriesBurned DESC")
     fun getRunsByCalories(): LiveData<List<Run>>
+    @Query("SELECT * FROM runs_table ORDER BY runDate DESC")
+    fun getRunsByDate(): LiveData<List<Run>>
 
     @Delete
     suspend fun deleteRun(run: Run)

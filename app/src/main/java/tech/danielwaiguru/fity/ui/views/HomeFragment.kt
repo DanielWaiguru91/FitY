@@ -37,7 +37,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
         setupRecyclerView()
-        runViewModel.allRuns.observe(viewLifecycleOwner, Observer {
+        runViewModel.runs.observe(viewLifecycleOwner, Observer {
             runAdapter.setRun(it)
         })
         initListeners()
@@ -49,6 +49,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         adapter = runAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }
+    private fun sortSelection() = when (runViewModel.c)
     //check permissions status and request again if not already granted
     private fun requestPermissions(){
         if (LocationUtils.hasPermissions(requireContext())){
