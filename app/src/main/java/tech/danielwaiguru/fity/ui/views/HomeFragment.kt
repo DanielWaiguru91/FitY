@@ -7,16 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import tech.danielwaiguru.fity.R
+import tech.danielwaiguru.fity.adapters.RunAdapter
 import tech.danielwaiguru.fity.common.Constants.REQUEST_PERMISSIONS_CODE
 import tech.danielwaiguru.fity.common.Constants.RUNTIME_PERMISSIONS
+import tech.danielwaiguru.fity.ui.viewmodels.RunViewModel
 import tech.danielwaiguru.fity.utils.LocationUtils
 
 class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+    private val runAdapter: RunAdapter by lazy { RunAdapter() }
+    private val runViewModel: RunViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,10 +35,18 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
+        setupRecyclerView()
+        runViewModel.allRuns.observe(viewLifecycleOwner, Observer {
+            runAdapter.setRun(it)
+        })
         initListeners()
     }
     private fun initListeners(){
         fab.setOnClickListener { initRunningProgressFragment() }
+    }
+    private fun setupRecyclerView() = runsRecyclerView.apply {
+        adapter = runAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
     //check permissions status and request again if not already granted
     private fun requestPermissions(){

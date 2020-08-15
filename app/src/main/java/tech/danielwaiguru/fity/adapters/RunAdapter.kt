@@ -22,7 +22,7 @@ class RunAdapter: RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
         val routeImage: ImageView = itemView.routeImage
     }
 
-    private val runsList = emptyList<Run>()
+    private var runsList = emptyList<Run>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
         return RunViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.run_item, parent, false)
@@ -46,5 +46,8 @@ class RunAdapter: RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
            val time = TimeUtils.formatTime(run.timeTaken)
            holder.runTime.text = time
        }
+    }
+    internal fun setRun(runs: List<Run>){
+        this.runsList = runs
     }
 }
