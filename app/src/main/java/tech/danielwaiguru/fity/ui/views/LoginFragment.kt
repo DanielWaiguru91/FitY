@@ -53,16 +53,15 @@ class LoginFragment : Fragment(){
         initHome()
     }
     private fun checkUserLoggedInStatus(){
-        val state = sharedPrefs.getBoolean(IS_USER_LOGGED_IN, false)
-        if (state){
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.navHostFragment, HomeFragment())
-                .addToBackStack(null)
-                .commit()
-            /*val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.loginFragment, true)
-                .build()
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment2, savede, navOptions)*/
+        view?.let {
+            val state = sharedPrefs.getBoolean(IS_USER_LOGGED_IN, false)
+            if (state){
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.navHostFragment, HomeFragment())
+                    .addToBackStack(null)
+                    .commit()
+
+            }
         }
     }
     private fun initHome(){

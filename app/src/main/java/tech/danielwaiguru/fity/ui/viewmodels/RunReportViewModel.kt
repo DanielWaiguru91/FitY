@@ -1,10 +1,10 @@
 package tech.danielwaiguru.fity.ui.viewmodels
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import tech.danielwaiguru.fity.repositories.RunRepository
-import javax.inject.Inject
 
-class RunReportViewModel @Inject constructor(private val runRepository: RunRepository): ViewModel() {
+class RunReportViewModel @ViewModelInject constructor(private val runRepository: RunRepository): ViewModel() {
     fun runsByDate() = runRepository.getRunsByDate()
     fun totalTime() = runRepository.getTotalTime()
     fun totalDistance() = runRepository.getTotalDistance()

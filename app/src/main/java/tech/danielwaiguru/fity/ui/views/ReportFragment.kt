@@ -1,12 +1,18 @@
 package tech.danielwaiguru.fity.ui.views
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_report.*
 import tech.danielwaiguru.fity.R
@@ -28,6 +34,31 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        setup()
+    }
+    //configure bar graph
+    private fun setup(){
+        runChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(false)
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        runChart.axisLeft.apply {
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        runChart.axisRight.apply {
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        runChart.apply {
+            description.text = context.getString(R.string.bar_title)
+            legend.isEnabled = false
+        }
     }
     private fun observeData(){
         runReportViewModel.totalTime().observe(viewLifecycleOwner, Observer {time ->
@@ -54,6 +85,19 @@ class ReportFragment : Fragment() {
             totalCalories?.let {
                 val calories = "${it}kcal"
                 caloriesBurn.text = calories
+            }
+        })
+        runReportViewModel.runsByDate().observe(viewLifecycleOwner, Observer { runs ->
+            runs?.let {
+                val averageSpeed =
+                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].averageSpeed) }
+                val dataSet = BarDataSet(averageSpeed, "Running Graph").apply {
+                    valueTextColor = Color.WHITE
+                    color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                }
+                runChart.data = BarData(dataSet)
+                runChart.invalidate()
+                runChart.animateY(2000)
             }
         })
     }
