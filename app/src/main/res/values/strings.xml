@@ -21,7 +21,7 @@
     <string name="duration">Duration</string>
     <string name="runners_route">Runners route</string>
     <string name="sort">Sort By:</string>
-    <string name="your_profile">Profile</string>
+    <string name="your_profile">Hello, Danny</string>
     <string name="user_profile">User Profile</string>
     <string name="name">Name:</string>
     <string name="weight">Weight</string>
@@ -34,6 +34,12 @@
     <string name="weight_error">Weight should greater than 0</string>
     <string name="name_error">Name should be at least 5 characters</string>
     <string name="empty_fields_error">Please input your details to continue</string>
+    <string name="edit">Edit Your Details</string>
+    <string name="result">This weeks result</string>
+    <string name="total_distance">TOTAL DISTANCE</string>
+    <string name="total_time">TOTAL TIME</string>
+    <string name="average_speed">AVERAGE SPEED</string>
+    <string name="total_calories_burned">CALORIES BURNED</string>
     <string-array name="filter_options">
         <item>Date</item>
         <item>Distance</item>

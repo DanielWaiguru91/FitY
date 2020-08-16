@@ -13,6 +13,7 @@ class RunRepository @Inject constructor(private val runDao: RunDao) {
     fun getTotalTime() = runDao.getTotalTime()
     fun getTotalDistance() = runDao.getTotalDistanceCovered()
     fun getTotalCaloriesBurned() = runDao.getTotalCaloriesBurned()
+    fun getTotalSpeed() = runDao.getTotalSpeed()
     fun getRunsByDistance() = runDao.getRunsByDistance()
     fun getRunsByTime() = runDao.getRunsByTime()
     fun getRunsBySpeed() = runDao.getRunsBySpeed()

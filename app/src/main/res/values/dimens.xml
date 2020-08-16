@@ -13,4 +13,6 @@
     <dimen name="spinner_width">100dp</dimen>
     <dimen name="view_height">200dp</dimen>
     <dimen name="margin_bottom_medium">15dp</dimen>
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="title_size_medium">18sp</dimen>
 </resources>

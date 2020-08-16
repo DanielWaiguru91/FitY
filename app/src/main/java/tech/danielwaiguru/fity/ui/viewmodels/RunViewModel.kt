@@ -16,10 +16,6 @@ class RunViewModel @ViewModelInject constructor(
     fun saveRun(run: Run) = viewModelScope.launch { runRepository.saveRun(run) }
     suspend fun deleteRun(run: Run) = viewModelScope.launch { runRepository.deleteRun(run) }
     suspend fun deleteAllRuns() = viewModelScope.launch { runRepository.deleteAllRuns() }
-    //Math functions
-    fun totalTime() = runRepository.getTotalTime()
-    fun totalDistance() = runRepository.getTotalDistance()
-    fun totalCaloriesBurned() = runRepository.getTotalCaloriesBurned()
     //Sorting
     private fun runsByDate() = runRepository.getRunsByDate()
     private fun runsByDistance() = runRepository.getRunsByDistance()
