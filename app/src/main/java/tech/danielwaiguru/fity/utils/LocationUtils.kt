@@ -7,7 +7,7 @@ import pub.devrel.easypermissions.EasyPermissions
 import tech.danielwaiguru.fity.common.Constants.RUNTIME_PERMISSIONS
 
 object LocationUtils {
-    fun hasPermissions(context: Context): Boolean {
+    fun hasPermissions(context: Context): Boolean =
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             EasyPermissions.hasPermissions(
                 context,
@@ -21,6 +21,4 @@ object LocationUtils {
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
             )
         }
-        return true
     }
-}
