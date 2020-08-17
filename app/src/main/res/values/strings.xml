@@ -41,6 +41,7 @@
     <string name="average_speed">AVERAGE SPEED</string>
     <string name="total_calories_burned">CALORIES BURNED</string>
     <string name="bar_title">Average Speed Over Time</string>
+    <string name="run_saved">Run saved successfully</string>
     <string-array name="filter_options">
         <item>Date</item>
         <item>Distance</item>

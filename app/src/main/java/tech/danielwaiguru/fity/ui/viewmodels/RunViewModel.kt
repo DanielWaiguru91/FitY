@@ -17,46 +17,46 @@ class RunViewModel @ViewModelInject constructor(
     suspend fun deleteRun(run: Run) = viewModelScope.launch { runRepository.deleteRun(run) }
     suspend fun deleteAllRuns() = viewModelScope.launch { runRepository.deleteAllRuns() }
     //Sorting
-    private fun runsByDate() = runRepository.getRunsByDate()
-    private fun runsByDistance() = runRepository.getRunsByDistance()
-    private fun runsByTime() = runRepository.getRunsByTime()
-    private fun runsBySpeed() = runRepository.getRunsBySpeed()
-    private fun runsByCalories() = runRepository.getRunsByCalories()
+    private val runsByDate = runRepository.getRunsByDate()
+    private val runsByDistance = runRepository.getRunsByDistance()
+    private val runsByTime = runRepository.getRunsByTime()
+    private val runsBySpeed = runRepository.getRunsBySpeed()
+    private val runsByCalories = runRepository.getRunsByCalories()
 
-    val runs = MediatorLiveData<List<Run>>()
-    var criteria = SortCriteria.DATE
-    fun getSortedRuns(){
-        runs.addSource(runsByDate()){result ->
+    var runs = MediatorLiveData<List<Run>>()
+    var criteria : SortCriteria = SortCriteria.DISTANCE
+    init {
+        runs.addSource(runsByDate){result ->
             if (criteria == SortCriteria.DATE){
                 result?.let { runs.value = it }
             }
         }
-        runs.addSource(runsByDistance()) { result ->
+        runs.addSource(runsByDistance) { result ->
             if (criteria == SortCriteria.DISTANCE){
                 result?.let { runs.value = it }
             }
         }
-        runs.addSource(runsByTime()) { result ->
+        runs.addSource(runsByTime) { result ->
             if (criteria == SortCriteria.TIME){
                 result?.let { runs.value = it }
             }
         }
-        runs.addSource(runsBySpeed()) { result ->
+        runs.addSource(runsBySpeed) { result ->
             if (criteria == SortCriteria.SPEED){
                 result?.let { runs.value = it }
             }
         }
-        runs.addSource(runsByCalories()) { result ->
+        runs.addSource(runsByCalories) { result ->
             if (criteria == SortCriteria.CALORIES){
                 result?.let { runs.value = it }
             }
         }
     }
     fun sortRuns(sortCriteria: SortCriteria) = when (sortCriteria){
-        SortCriteria.DATE -> runsByDate().value?.let { runs.value = it }
-        SortCriteria.DISTANCE -> runsByDistance().value?.let { runs.value = it }
-        SortCriteria.TIME -> runsByTime().value?.let { runs.value = it }
-        SortCriteria.SPEED -> runsBySpeed().value?.let { runs.value = it }
-        SortCriteria.CALORIES -> runsByCalories().value?.let { runs.value = it }
+        SortCriteria.DATE -> runsByDate.value?.let { runs.value = it }
+        SortCriteria.DISTANCE -> runsByDistance.value?.let { runs.value = it }
+        SortCriteria.TIME -> runsByTime.value?.let { runs.value = it }
+        SortCriteria.SPEED -> runsBySpeed.value?.let { runs.value = it }
+        SortCriteria.CALORIES -> runsByCalories.value?.let { runs.value = it }
     }.also { this.criteria = sortCriteria }
 }

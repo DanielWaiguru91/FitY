@@ -5,35 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.views.HomeFragment">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Hello Danny"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                />
-        </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sort"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:id="@+id/sort"
         app:layout_constraintTop_toTopOf="@id/filterSpinner"
         app:layout_constraintBottom_toBottomOf="@id/filterSpinner"
         app:layout_constraintEnd_toStartOf="@id/filterSpinner"
@@ -44,7 +23,7 @@
         android:layout_height="wrap_content"
         android:entries="@array/filter_options"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin"
         />
     <androidx.recyclerview.widget.RecyclerView

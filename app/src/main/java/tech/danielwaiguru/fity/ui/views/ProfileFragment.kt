@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import tech.danielwaiguru.fity.R
 import tech.danielwaiguru.fity.common.Constants.IS_USER_LOGGED_IN
@@ -48,7 +47,6 @@ class ProfileFragment : DialogFragment() {
             .putBoolean(IS_USER_LOGGED_IN, true)
             .apply()
         val title = "Hello, $editedName"
-        requireActivity().toolbarTitle.text = title
     }
     private fun validateUserInputs(): Boolean{
         var isValid = true

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/card_radius"
+    android:layout_margin="@dimen/margin"
     android:elevation="@dimen/card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +57,7 @@
                     android:layout_width="@dimen/image_size"
                     android:layout_height="@dimen/image_size"
                     android:contentDescription="@string/time"
-                    android:src="@drawable/ic_timer"
+                    android:src="@drawable/ic_timeline"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     />
@@ -86,7 +87,7 @@
                     android:layout_width="@dimen/image_size"
                     android:layout_height="@dimen/image_size"
                     android:contentDescription="@string/time"
-                    android:src="@drawable/ic_timer"
+                    android:src="@drawable/ic_speed"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     />
@@ -100,7 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/duration"
+                    android:text="@string/speed"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     />
@@ -110,7 +111,8 @@
             android:layout_marginTop="@dimen/margin_small"
             android:id="@+id/routeImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
             app:layout_constraintTop_toBottomOf="@id/topContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

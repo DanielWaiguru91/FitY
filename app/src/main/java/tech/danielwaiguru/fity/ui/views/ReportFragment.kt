@@ -1,5 +1,6 @@
 package tech.danielwaiguru.fity.ui.views
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,13 +17,18 @@ import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_report.*
 import tech.danielwaiguru.fity.R
+import tech.danielwaiguru.fity.common.Constants.NAME_KEY
+import tech.danielwaiguru.fity.common.Constants.WEIGHT_KEY
 import tech.danielwaiguru.fity.ui.viewmodels.RunReportViewModel
 import tech.danielwaiguru.fity.utils.TimeUtils
+import javax.inject.Inject
 import kotlin.math.round
 
 @AndroidEntryPoint
 class ReportFragment : Fragment() {
     private val runReportViewModel:RunReportViewModel by viewModels()
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +40,17 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        loadUserData()
         setup()
+    }
+    private fun loadUserData(){
+        val name = sharedPrefs.getString(NAME_KEY, "")
+        val weight = sharedPrefs.getFloat(WEIGHT_KEY, 60f)
+        name?.let {
+            welcomeText.text = it
+            userName.text = it
+        }
+        userWeight.text = weight.toString()
     }
     //configure bar graph
     private fun setup(){

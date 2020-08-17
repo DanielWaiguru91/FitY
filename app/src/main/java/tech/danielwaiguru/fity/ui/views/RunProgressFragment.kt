@@ -21,6 +21,7 @@ import tech.danielwaiguru.fity.common.Constants
 import tech.danielwaiguru.fity.common.Constants.ACTION_PAUSE
 import tech.danielwaiguru.fity.common.Constants.ACTION_START
 import tech.danielwaiguru.fity.common.gone
+import tech.danielwaiguru.fity.common.toast
 import tech.danielwaiguru.fity.common.visible
 import tech.danielwaiguru.fity.database.Run
 import tech.danielwaiguru.fity.service.RunningService
@@ -140,6 +141,7 @@ class RunProgressFragment : Fragment() {
                 timeTaken = currentTimeInMillis,
                 image = bitmap,caloriesBurned = caloriesBurned)
             runViewModel.saveRun(run)
+            activity?.toast(getString(R.string.run_saved))
             stopRunService()
         }
     }
