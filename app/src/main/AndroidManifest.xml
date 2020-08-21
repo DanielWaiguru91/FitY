@@ -21,12 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="tech.danielwaiguru.fity.ui.views.MainActivity" />
+        <activity android:name="tech.danielwaiguru.fity.ui.views.MainActivity"
+            android:launchMode="singleTask"/>
+        <service android:name=".service.RunningService"
+            android:foregroundServiceType="location"/>
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

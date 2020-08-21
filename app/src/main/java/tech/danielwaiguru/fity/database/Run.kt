@@ -1,5 +1,6 @@
 package tech.danielwaiguru.fity.database
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,7 +11,7 @@ data class Run (
     val runDate: Long,
     val averageSpeed: Float,
     val distance: Float,
-    val timeTaken: Float,
+    val timeTaken: Long,
     val caloriesBurned: Int,
-    val image: Int
+    val image: Bitmap
 )

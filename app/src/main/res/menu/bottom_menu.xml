@@ -11,5 +11,4 @@
         android:title="@string/reminder"
         android:icon="@drawable/ic_calendar"
         />
-
 </menu>

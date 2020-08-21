@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin"
+    android:orientation="vertical"
+    tools:context=".ui.views.ProfileFragment">
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/your_profile"
+       android:textStyle="bold"
+       android:layout_marginBottom="@dimen/margin_big"
+       android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+       android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
+        android:hint="@string/name"
+        android:inputType="text"
+        tools:ignore="Autofill" />
+    <EditText
+        android:id="@+id/etWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
+        android:hint="@string/weight"
+        android:inputType="number|numberDecimal"
+        tools:ignore="Autofill" />
+    <Button
+        android:id="@+id/saveDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_big"
+        android:background="@color/colorAccent"
+        android:text="@string/edit_your_details"
+        android:textColor="@color/white" />
+</LinearLayout>

@@ -3,37 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
+    <action android:id="@+id/global_action"
+        app:destination="@id/runProgressFragment" />
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="tech.danielwaiguru.fity.ui.views.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_runProgressFragment"
-            app:destination="@id/runProgressFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/reportFragment"
-        android:name="tech.danielwaiguru.fity.ui.views.ReportFragment"
-        android:label="fragment_report"
-        tools:layout="@layout/fragment_report" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="tech.danielwaiguru.fity.ui.views.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+    <dialog
+        android:id="@+id/profileFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/reminderFragment"
         android:name="tech.danielwaiguru.fity.ui.views.ReminderFragment"
         android:label="fragment_reminder"
         tools:layout="@layout/fragment_reminder" />
     <fragment
+        android:id="@+id/reportFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
+    <fragment
         android:id="@+id/runProgressFragment"
         android:name="tech.danielwaiguru.fity.ui.views.RunProgressFragment"
         android:label="fragment_run_progress"
-        tools:layout="@layout/fragment_run_progress" />
+        tools:layout="@layout/fragment_run_progress" >
+        <action
+            android:id="@+id/action_runProgressFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment2_to_runProgressFragment"
+            app:destination="@id/runProgressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="tech.danielwaiguru.fity.ui.views.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
